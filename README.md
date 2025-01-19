@@ -1,14 +1,59 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# React Native Movie App - README
 
-# Getting Started
+## Project Description
 
->**Note**: Make sure you have completed the [React Native - Environment Setup](https://reactnative.dev/docs/environment-setup) instructions till "Creating a new application" step, before proceeding.
+A feature-rich React Native app designed for movie enthusiasts. This app provides:
 
-## Step 1: Start the Metro Server
+- **Now Playing, Popular, and Upcoming Movies**: Browse through the latest movies.
+- **User Authentication**: Secure login via Firebase.
+- **Personalized Collections**: Save and manage your favorite movies effortlessly.
 
-First, you will need to start **Metro**, the JavaScript _bundler_ that ships _with_ React Native.
+---
 
-To start Metro, run the following command from the _root_ of your React Native project:
+## ✨ Features
+
+1. **Splash Screen**:
+   - Includes an animated Lottie animation.
+2. **User Authentication**:
+   - **Login**: Secure login with email and password.
+   - **Registration**: Sign up with details including a profile photo.
+3. **Home Screen**:
+   - Tabs: `Now Playing`, `Popular`, `Upcoming`, `Favorites`.
+   - Movies displayed with posters, titles, and summaries.
+   - Tap to navigate to detailed movie information.
+4. **Movie Details**:
+   - Ratings, votes, popularity, release date, and more.
+   - Add or remove movies from Favorites.
+5. **Favorites Section**:
+   - Synced with Firebase Firestore for real-time updates.
+6. **User Profile**:
+   - Edit personal details like name, photo, and address.
+7. **Smooth Navigation**:
+   - Drawer and Tab Navigation.
+8. **TMDb API Integration**:
+   - Fetch real-time movie data via the [TMDb API](https://www.themoviedb.org/).
+
+---
+
+## ⚙️ Setup Instructions
+
+### 📂 Clone the Repository
+
+1. Open your terminal.
+2. Clone the repository:
+   ```bash
+   git clone https://github.com/skviradiya/MovieApp.git
+   ```
+3. Navigate to the project folder:
+   ```bash
+   cd MovieApp
+   ```
+
+### 🚀 Run the Project
+
+#### Step 1: Start the Metro Server
+
+First, start **Metro**, the JavaScript _bundler_ for React Native:
 
 ```bash
 # using npm
@@ -18,11 +63,11 @@ npm start
 yarn start
 ```
 
-## Step 2: Start your Application
+#### Step 2: Start your Application
 
-Let Metro Bundler run in its _own_ terminal. Open a _new_ terminal from the _root_ of your React Native project. Run the following command to start your _Android_ or _iOS_ app:
+With Metro running in its own terminal, open a new terminal in the root of your project and run:
 
-### For Android
+**For Android**:
 
 ```bash
 # using npm
@@ -32,7 +77,7 @@ npm run android
 yarn android
 ```
 
-### For iOS
+**For iOS**:
 
 ```bash
 # using npm
@@ -42,38 +87,68 @@ npm run ios
 yarn ios
 ```
 
-If everything is set up _correctly_, you should see your new app running in your _Android Emulator_ or _iOS Simulator_ shortly provided you have set up your emulator/simulator correctly.
+Ensure you have the Android Emulator or iOS Simulator set up correctly. You can also run the app directly from Android Studio or Xcode.
 
-This is one way to run your app — you can also run it directly from within Android Studio and Xcode respectively.
+---
 
-## Step 3: Modifying your App
+### 🛠 React Native Setup
 
-Now that you have successfully run the app, let's modify it.
+This is a new **[React Native](https://reactnative.dev)** project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
 
-1. Open `App.tsx` in your text editor of choice and edit some lines.
-2. For **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Developer Menu** (<kbd>Ctrl</kbd> + <kbd>M</kbd> (on Window and Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (on macOS)) to see your changes!
+Before proceeding, ensure you’ve completed the [Environment Setup](https://reactnative.dev/docs/environment-setup) for React Native.
 
-   For **iOS**: Hit <kbd>Cmd ⌘</kbd> + <kbd>R</kbd> in your iOS Simulator to reload the app and see your changes!
+---
 
-## Congratulations! :tada:
+### 🔥 Firebase Setup
 
-You've successfully run and modified your React Native App. :partying_face:
+1. Visit the [Firebase Console](https://console.firebase.google.com/) and create a new project.
+2. Enable **Authentication** and **Firestore Database**.
+3. Download the `google-services.json` (Android) or `GoogleService-Info.plist` (iOS) file and add it to the project.
+4. Install Firebase dependencies:
+   ```bash
+   yarn add @react-native-firebase/app @react-native-firebase/auth @react-native-firebase/firestore
+   ```
 
-### Now what?
+#### Firebase Modules Overview 📋
 
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [Introduction to React Native](https://reactnative.dev/docs/getting-started).
+| **Module**                                               | **Description**                                            |
+| -------------------------------------------------------- | ---------------------------------------------------------- |
+| [Authentication](https://rnfirebase.io/auth/usage)       | Secure user authentication.                                |
+| [Cloud Firestore](https://rnfirebase.io/firestore/usage) | Real-time NoSQL database for syncing and storing app data. |
 
-# Troubleshooting
+For more details, visit the official [React Native Firebase Documentation](https://rnfirebase.io).
 
-If you can't get this to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
+---
 
-# Learn More
+## 🛠 Tech Stack
 
-To learn more about React Native, take a look at the following resources:
+- **[React Native](https://reactnative.dev)**: Framework for building cross-platform mobile applications using JavaScript and React.
+- **[Firebase Authentication](https://firebase.google.com/docs/auth)**: Provides secure and user-friendly authentication mechanisms for apps.
+- **[Cloud Firestore](https://firebase.google.com/docs/firestore)**: NoSQL database for real-time data synchronization and efficient storage.
+- **[TMDb API](https://www.themoviedb.org/documentation/api)**: Source for comprehensive movie data, including ratings, summaries, and more.
+- **[Redux](https://redux.js.org/)**: A predictable state container for JavaScript apps, enabling efficient state management.
+- **[React Navigation](https://reactnavigation.org/)**: Flexible and extensible navigation solution for React Native applications.
+- **[Axios](https://axios-http.com/)**: Promise-based HTTP client for making API requests from JavaScript applications.
+- **[Image Crop Picker](https://github.com/ivpusic/react-native-image-crop-picker)**: Library for selecting and cropping images within React Native applications.
 
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+---
+
+## 📸 Screenshots
+
+Below are screenshots showcasing different screens of the app:
+
+| Splash Screen                             | Sign In Screen                             | Register Screen                               |
+| ----------------------------------------- | ------------------------------------------ | --------------------------------------------- |
+| ![Splash Screen](/screenshots/splash.png) | ![Sign In Screen](/screenshots/signIn.png) | ![Register Screen](/screenshots/register.png) |
+
+| Home Screen                            | Movie Details Screen                              | Drawer View Screen                        |
+| -------------------------------------- | ------------------------------------------------- | ----------------------------------------- |
+| ![Home Screen](/screenshots//home.png) | ![Details Screen](/screenshots/movie-details.png) | ![Drawer Screen](/screenshots/drawer.png) |
+
+| Profile Screen                              | No Internet Screen                                  | Image Select Popup                             |
+| ------------------------------------------- | --------------------------------------------------- | ---------------------------------------------- |
+| ![Profile Screen](/screenshots/profile.png) | ![No Internet Screen](/screenshots/no-internet.png) | ![Image Select](/screenshots/image-select.png) |
+
+| Logout Popup                             |     |
+| ---------------------------------------- | --- |
+| ![Logout Popup](/screenshots/logout.png) |     |

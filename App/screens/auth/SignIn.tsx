@@ -71,15 +71,16 @@ function SignInScreen() {
   const fetchUserDetailsFromDB = async (
     data: FirebaseAuthTypes.UserCredential,
   ) => {
-    setIsLoading(false);
     try {
       const userDoc = await user.doc(data.user.uid).get();
       const userData = userDoc.data() as IUserDetails;
       const storableUserInfo = {...userData, uid: data.user.uid};
       dispatch(userActions.setUserDetails(storableUserInfo));
       await saveUserInfo(storableUserInfo);
+      setIsLoading(false);
       navigation.replace(screens.UserStack);
     } catch (error) {
+      setIsLoading(false);
       console.log('🚀 ~ fetchUserDetailsFromDB ~ error:', error);
     }
   };
