@@ -48,7 +48,7 @@ export default function UpcomingTab({tabIndex}: ITabProps) {
       <FlatList
         data={listData}
         renderItem={renderItem}
-        keyExtractor={item => item.id.toString()}
+        keyExtractor={(item, index) => `${item.id}-${index}`}
         onEndReachedThreshold={0.9}
         onEndReached={fetchData}
         initialNumToRender={10}

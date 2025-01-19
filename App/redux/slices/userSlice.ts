@@ -12,6 +12,9 @@ const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
+    reset:(state)=>{
+      state.userDetails = initialState.userDetails;
+    },
     setUserDetails:(state,action:PayloadAction<IUserDetails>)=>{
       state.userDetails = action.payload;
     },

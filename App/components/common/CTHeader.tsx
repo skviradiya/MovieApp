@@ -1,5 +1,11 @@
 import React from 'react';
-import {View, Text, StyleSheet, GestureResponderEvent} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  GestureResponderEvent,
+  SafeAreaView,
+} from 'react-native';
 import CTIcon from './CTIcon'; // Adjust the path as necessary
 import {backArrowIcon} from '@App/assets/icons';
 import colors from '@App/constants/colors';
@@ -20,13 +26,16 @@ const CTHeader: React.FC<CTHeaderProps> = ({
   titleStyle = {},
 }) => {
   return (
-    <View style={[styles.container, containerStyle]}>
-      {onBackPress ? (
-        <CTIcon source={backArrowIcon} onPress={onBackPress} />
-      ) : null}
-      {title ? <Text style={[styles.title, titleStyle]}>{title}</Text> : null}
-      {onBackPress ? <View style={styles.iconPlaceholder} /> : null}
-    </View>
+    <>
+      <SafeAreaView style={{backgroundColor: colors.background, zIndex: 100}} />
+      <View style={[styles.container, containerStyle]}>
+        {onBackPress ? (
+          <CTIcon source={backArrowIcon} onPress={onBackPress} />
+        ) : null}
+        {title ? <Text style={[styles.title, titleStyle]}>{title}</Text> : null}
+        {onBackPress ? <View style={styles.iconPlaceholder} /> : null}
+      </View>
+    </>
   );
 };
 

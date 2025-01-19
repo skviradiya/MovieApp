@@ -13,6 +13,7 @@ import {screens} from '@App/constants/screens';
 
 const MovieItem = ({item}: {item: IMoviesResult}) => {
   const navigation = useNavigation<UserNavigationProps>();
+  console.log(IMAGE_URL + item.backdrop_path);
   return (
     <TouchableOpacity
       onPress={() => {

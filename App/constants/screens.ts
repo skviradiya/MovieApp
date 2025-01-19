@@ -6,5 +6,8 @@ export enum screens {
   AuthStack = 'AuthStack',
   UserStack = 'UserStack',
   MovieDetailsScreen = 'MovieDetailsScreen',
+  DrawerStack = 'DrawerStack',
+  ProfileScreen = 'ProfileScreen',
+  NoInternetScreen = 'NoInternetScreen',
 
 }

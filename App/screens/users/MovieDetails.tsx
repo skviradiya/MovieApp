@@ -6,12 +6,13 @@ import {firebaseCollections} from '@App/constants/firebase';
 import {fonts} from '@App/constants/fonts';
 import {screens} from '@App/constants/screens';
 import {IMAGE_URL} from '@App/constants/tempEnv';
-import {useAppSelector} from '@App/redux/store';
+import {movieActions} from '@App/redux/slices/movieSlice';
+import {useAppDispatch, useAppSelector} from '@App/redux/store';
 import {UserStackNavigationParams} from '@App/types/navigation';
 import {fontScale} from '@App/utils/fontScaling';
 import firestore from '@react-native-firebase/firestore';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import React from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {ScrollView, StyleSheet, Text, View} from 'react-native';
 import FastImage from 'react-native-fast-image';
 import LinearGradient from 'react-native-linear-gradient';
@@ -26,14 +27,53 @@ const renderDetail = (label: string, value: string | number) => (
   </>
 );
 export default function MovieDetailsScreen({route, navigation}: Props) {
+  const dispatch = useAppDispatch();
   const userData = useAppSelector(data => data.user.userDetails);
+  const favoritesData = useAppSelector(data => data.movie.favoritesData);
+  const [isFavorite, setIsFavorite] = useState(false);
 
   const movieDetails = route.params.moviesDetails;
-  const users = firestore()
+  const firestoreRef = firestore()
     .collection(firebaseCollections.users)
-    .doc(userData?.uid);
-  const onPressFavorite = () => {};
-  // const onPressRemoveFavorite = () => {};
+    .doc(userData?.uid)
+    .collection(firebaseCollections.favoriteMovies);
+  const onPressFavorite = () => {
+    firestoreRef
+      .doc(movieDetails.id.toString())
+      .set({
+        ...movieDetails,
+        createdAt: firestore.FieldValue.serverTimestamp(),
+      })
+      .then(() => {
+        setIsFavorite(true);
+        dispatch(
+          movieActions.setFavoritesData([movieDetails, ...favoritesData]),
+        );
+      });
+  };
+  const onPressRemoveFavorite = () => {
+    firestoreRef
+
+      .doc(movieDetails.id.toString())
+      .delete()
+      .then(() => {
+        setIsFavorite(false);
+        dispatch(
+          movieActions.setFavoritesData(
+            favoritesData.filter(item => item.id !== movieDetails.id),
+          ),
+        );
+      });
+  };
+  const checkFavoriteStatus = useCallback(async () => {
+    const movieData = await firestoreRef.doc(movieDetails.id.toString()).get();
+    if (movieData.exists) {
+      setIsFavorite(true);
+    }
+  }, [firestoreRef, movieDetails.id]);
+  useEffect(() => {
+    checkFavoriteStatus();
+  }, [checkFavoriteStatus]);
   return (
     <View style={styles.container}>
       <CTHeader
@@ -59,7 +99,15 @@ export default function MovieDetailsScreen({route, navigation}: Props) {
             />
             <View style={styles.titleButtonContainer}>
               <Text style={styles.titleText}>{movieDetails.title}</Text>
-              <CTButton title="Favorite" onPress={onPressFavorite} />
+              <CTButton
+                title={isFavorite ? 'Remove' : 'Favorite'}
+                onPress={isFavorite ? onPressRemoveFavorite : onPressFavorite}
+                style={{
+                  backgroundColor: isFavorite
+                    ? colors.cardBackground
+                    : colors.primary,
+                }}
+              />
             </View>
           </View>
           <View style={styles.detailsContainer}>
@@ -108,6 +156,7 @@ const styles = StyleSheet.create({
   scrollViewContent: {
     paddingTop: gWindowHeight / 3 / 1.5,
     paddingHorizontal: 20,
+    paddingBottom: 100,
   },
   linearGradient: {
     width: gWindowWidth,
@@ -121,6 +170,7 @@ const styles = StyleSheet.create({
   },
   posterImage: {
     width: '40%',
+    backgroundColor: colors.border,
     height: gWindowHeight / 4,
     borderRadius: 10,
     elevation: 100,

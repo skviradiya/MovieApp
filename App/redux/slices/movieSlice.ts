@@ -1,5 +1,5 @@
 import { IMoviesRequest, IMoviesResponse, IMoviesResult } from '@App/types/slice/movieSlice';
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
 
 
@@ -66,6 +66,9 @@ interface IMovieState {
   upcomingData:IMoviesResult[] |null
   upcomingPage:number
   upcomingTotalPage:number
+  favoritesData:IMoviesResult[] |[]
+  isFavoriteDataFetched:boolean
+
 }
 
 const initialState: IMovieState = {
@@ -78,6 +81,8 @@ const initialState: IMovieState = {
   upcomingData: null,
   upcomingPage:1,
   upcomingTotalPage:1,
+  favoritesData: [],
+  isFavoriteDataFetched:false,
 };
 const movieSlice = createSlice({
   name: 'movie',
@@ -86,6 +91,13 @@ const movieSlice = createSlice({
     reset:(state)=>{
       Object.assign(state, initialState);
     },
+    setFavoritesData:(state,action:PayloadAction<IMoviesResult[]>)=>{
+      state.favoritesData = action.payload;
+    },
+    setIsFavoriteDataFetched:(state,action:PayloadAction<boolean>)=>{
+      state.isFavoriteDataFetched = action.payload;
+    },
+
   },
   extraReducers: (builder) => {
     builder

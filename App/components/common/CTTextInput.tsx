@@ -30,8 +30,8 @@ function CTTextInput({
   onBlur,
   ...props
 }: CTTextInputProps) {
-  const [isFocused, setIsFocused] = useState(false);
-  const [isSecure, setIsSecure] = useState(false);
+  const [isFocused, setIsFocused] = useState(value ? true : false);
+  const [isSecure, setIsSecure] = useState(isPassword || false);
   const handleFocus = () => {
     setIsFocused(true);
   };

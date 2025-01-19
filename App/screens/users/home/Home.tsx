@@ -1,5 +1,13 @@
 import HeaderView from '@App/components/home/HeaderView';
 import colors from '@App/constants/colors';
+import {fonts} from '@App/constants/fonts';
+import {screens} from '@App/constants/screens';
+import {userActions} from '@App/redux/slices/userSlice';
+import {useAppDispatch} from '@App/redux/store';
+import {UserStackNavigationParams} from '@App/types/navigation';
+import {readUserInfo} from '@App/utils/asyncActions';
+import {fontScale} from '@App/utils/fontScaling';
+import {DrawerScreenProps} from '@react-navigation/drawer';
 import React, {useEffect, useRef} from 'react';
 import {
   FlatList,
@@ -14,16 +22,13 @@ import FavoritesTab from './FavoritesTab';
 import NowPlayingTab from './NowPlayingTab';
 import PopularTab from './PopularTab';
 import UpcomingTab from './UpcomingTab';
-import {fontScale} from '@App/utils/fontScaling';
-import {fonts} from '@App/constants/fonts';
-import {useAppDispatch} from '@App/redux/store';
-import {readUserInfo} from '@App/utils/asyncActions';
-import {userActions} from '@App/redux/slices/userSlice';
 
 export interface ITabProps {
   tabIndex: number;
 }
-export default function HomeScreen() {
+type Props = DrawerScreenProps<UserStackNavigationParams, screens.HomeScreen>;
+export default function HomeScreen({route}: Props) {
+  const changeableTabIndex = route?.params?.tabIndex || 0;
   const dispatch = useAppDispatch();
   const layout = useWindowDimensions();
   const [tabIndex, setTabIndex] = React.useState(0);
@@ -35,14 +40,24 @@ export default function HomeScreen() {
     {key: 'FavoritesTab', title: 'Favorites'},
   ];
   useEffect(() => {
+    setTimeout(() => {
+      tablistRef.current?.scrollToIndex({
+        index: changeableTabIndex,
+        animated: true,
+        viewPosition: changeableTabIndex > 1 ? 0 : 1,
+      });
+      setTabIndex(changeableTabIndex);
+    }, 300);
+  }, [changeableTabIndex]);
+  useEffect(() => {
     readUserInfo().then(data => {
       if (data) {
         dispatch(userActions.setUserDetails(data));
       }
     });
   }, [dispatch]);
-  const renderScene = ({route}: {route: {key: string}}) => {
-    switch (route.key) {
+  const renderScene = ({route: sceneRoute}: {route: {key: string}}) => {
+    switch (sceneRoute.key) {
       case 'NowPlayingTab':
         return <NowPlayingTab tabIndex={tabIndex} />;
       case 'PopularTab':

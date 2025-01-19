@@ -21,9 +21,13 @@ export type AuthNavigationProps=NativeStackNavigationProp<AuthStackNavigationPar
 
 
 export type UserStackNavigationParams={
-[screens.HomeScreen]:undefined,
+[screens.DrawerStack]:undefined,
 [screens.MovieDetailsScreen]:{
   moviesDetails:IMoviesResult
+},
+[screens.ProfileScreen]:undefined,
+[screens.HomeScreen]:{
+  tabIndex?:number
 },
 }
 
