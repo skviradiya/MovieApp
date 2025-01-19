@@ -4,15 +4,17 @@ import {movieActions} from '@App/redux/slices/movieSlice';
 import {useAppDispatch, useAppSelector} from '@App/redux/store';
 import {IMoviesResult} from '@App/types/slice/movieSlice';
 import firestore from '@react-native-firebase/firestore';
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {FlatList, StyleSheet, Text, View} from 'react-native';
 import {ITabProps} from './Home';
 import colors from '@App/constants/colors';
 import {fonts} from '@App/constants/fonts';
+import CTLoader from '@App/components/common/CTLoader';
 export default function FavoritesTab({tabIndex}: ITabProps) {
   const dispatch = useAppDispatch();
   const userData = useAppSelector(data => data.user.userDetails);
   const listData = useAppSelector(data => data.movie.favoritesData);
+  const [loading, setLoading] = useState(false);
   const isFavoriteDataFetched = useAppSelector(
     data => data.movie.isFavoriteDataFetched,
   );
@@ -21,10 +23,12 @@ export default function FavoritesTab({tabIndex}: ITabProps) {
     .doc(userData?.uid)
     .collection(firebaseCollections.favoriteMovies);
   const getDataFromFirestoreDB = React.useCallback(() => {
+    setLoading(true);
     firestoreRef
       .orderBy('createdAt', 'desc')
       .get()
       .then(data => {
+        setLoading(false);
         const favMovies = data.docs.map(doc => {
           let favData = {
             ...doc.data(),
@@ -34,6 +38,10 @@ export default function FavoritesTab({tabIndex}: ITabProps) {
         });
         dispatch(movieActions.setFavoritesData(favMovies));
         dispatch(movieActions.setIsFavoriteDataFetched(true));
+      })
+      .catch(error => {
+        console.log('🚀 ~ getDataFromFirestoreDB ~ error:', error);
+        setLoading(false);
       });
   }, [firestoreRef, dispatch]);
 
@@ -49,7 +57,7 @@ export default function FavoritesTab({tabIndex}: ITabProps) {
 
   return (
     <View style={styles.container}>
-      {/* <CTLoader isVisible={loading} /> */}
+      <CTLoader isVisible={loading} />
       <FlatList
         data={listData}
         renderItem={renderItem}

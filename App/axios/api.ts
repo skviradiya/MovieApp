@@ -1,4 +1,5 @@
-import { ApiAuthToken, BASE_URL } from '@App/constants/tempEnv';
+
+import { API_TOKEN, BASE_URL } from '@env';
 import axios from 'axios';
 
 
@@ -11,7 +12,7 @@ axios.defaults.headers.common['Content-Type'] = 'application/json';
 axios.interceptors.request.use(
   (config) => {
 
-    const token = ApiAuthToken;
+    const token = API_TOKEN;
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }

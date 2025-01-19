@@ -47,7 +47,7 @@ export default function HomeScreen({route}: Props) {
         viewPosition: changeableTabIndex > 1 ? 0 : 1,
       });
       setTabIndex(changeableTabIndex);
-    }, 300);
+    }, 500);
   }, [changeableTabIndex]);
   useEffect(() => {
     readUserInfo().then(data => {

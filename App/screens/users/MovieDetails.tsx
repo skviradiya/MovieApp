@@ -5,11 +5,12 @@ import {gWindowHeight, gWindowWidth} from '@App/constants/constants';
 import {firebaseCollections} from '@App/constants/firebase';
 import {fonts} from '@App/constants/fonts';
 import {screens} from '@App/constants/screens';
-import {IMAGE_URL} from '@App/constants/tempEnv';
+
 import {movieActions} from '@App/redux/slices/movieSlice';
 import {useAppDispatch, useAppSelector} from '@App/redux/store';
 import {UserStackNavigationParams} from '@App/types/navigation';
 import {fontScale} from '@App/utils/fontScaling';
+import {IMAGE_URL} from '@env';
 import firestore from '@react-native-firebase/firestore';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import React, {useCallback, useEffect, useState} from 'react';

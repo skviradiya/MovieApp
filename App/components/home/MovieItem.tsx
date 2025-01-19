@@ -5,15 +5,15 @@ import {IMoviesResult} from '@App/types/slice/movieSlice';
 import colors from '@App/constants/colors';
 import {gWindowHeight} from '@App/constants/constants';
 import {fonts} from '@App/constants/fonts';
-import {IMAGE_URL} from '@App/constants/tempEnv';
+
 import {fontScale} from '@App/utils/fontScaling';
 import {useNavigation} from '@react-navigation/native';
 import {UserNavigationProps} from '@App/types/navigation';
 import {screens} from '@App/constants/screens';
+import {IMAGE_URL} from '@env';
 
 const MovieItem = ({item}: {item: IMoviesResult}) => {
   const navigation = useNavigation<UserNavigationProps>();
-  console.log(IMAGE_URL + item.backdrop_path);
   return (
     <TouchableOpacity
       onPress={() => {
